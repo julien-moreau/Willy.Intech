@@ -1,8 +1,6 @@
 Willy.Intech
 ============
 
-'''html
 <pre>
-coucou
+Design patterns exercice with Clémence and Sinthu !
 </pre>
-'''html
