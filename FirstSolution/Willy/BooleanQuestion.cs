@@ -10,7 +10,13 @@ namespace Willy
 {
     class BooleanQuestion : QuestionBase
     {
-        public BooleanQuestion(IQuestionContainer parent) : base(parent)
+        public BooleanQuestion(IQuestionFolderContainer parent)
+            : base(parent)
+        {
+
+        }
+
+        public override void answer()
         {
 
         }

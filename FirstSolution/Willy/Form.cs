@@ -8,37 +8,33 @@ using Willy.Interfaces;
 
 namespace Willy
 {
-    public class Form : IQuestionContainer
+    public class Form : QuestionFolder
     {
         private string _title;
-        private List<IQuestionContainer> _questions;
 
         public Form(string title)
+            : base(null)
         {
             _title = title;
-            _questions = new List<IQuestionContainer>();
         }
 
+        /// <summary>
+        /// Adds a question from the plugintype string
+        /// </summary>
+        /// <param name="pluginTypeName"></param>
+        /// <returns></returns>
         public IQuestionContainer AddQuestion(string pluginTypeName)
         {
             Type pluginType = Type.GetType(pluginTypeName);
             IQuestionContainer thePlugin = (IQuestionContainer)Activator.CreateInstance(pluginType, this);
-            _questions.Add(thePlugin);
+            base.Questions.Add(thePlugin);
 
             return thePlugin;
         }
 
-        public int Index
-        {
-            get { return 0; }
-            set { }
-        }
-        public IQuestionContainer Parent
-        {
-            get { return null; }
-            set { }
-        }
-
+        /// <summary>
+        /// Return the form's title
+        /// </summary>
         public string Title
         {
             get { return _title; }

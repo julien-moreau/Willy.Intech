@@ -6,18 +6,12 @@ using System.Threading.Tasks;
 
 namespace Willy.Interfaces
 {
-    public interface IQuestionContainer
+    public interface IQuestionFolderContainer : IQuestionContainer
     {
-        int Index
+        List<IQuestionContainer> Questions
         {
             get;
-            set;
         }
 
-        IQuestionFolderContainer Parent
-        {
-            get;
-            set;
-        }
     }
 }

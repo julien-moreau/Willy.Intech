@@ -8,33 +8,59 @@ using Willy.Interfaces;
 
 namespace Willy
 {
-    public partial class QuestionBase : IQuestionContainer
+    public abstract class QuestionBase : IQuestionContainer
     {
-        IQuestionContainer _parent;
+        IQuestionFolderContainer _parent;
 
-        public QuestionBase(IQuestionContainer parent)
+        public QuestionBase(IQuestionFolderContainer parent)
         {
             _parent = parent;
         }
 
+        /// <summary>
+        /// Return the QuestionBase's index or sets a new index to the QuestionBase
+        /// </summary>
         public int Index
         {
             get { return _parent.Questions.IndexOf(this); }
-            set { }
+            set
+            {
+                if (value < 0 || value >= _parent.Questions.Count)
+                {
+                    throw new IndexOutOfRangeException("The Index value is out of range");
+                }
+                else
+                {
+                    int lastIndex = this.Index;
+                    _parent.Questions.Insert(value+1, this);
+                    _parent.Questions.RemoveAt(lastIndex);
+                }
+            }
         }
 
-        public IQuestionContainer Parent
+        /// <summary>
+        /// Return the QuestionBase's parent
+        /// </summary>
+        public IQuestionFolderContainer Parent
         {
             get { return _parent; }
-            set { _parent = value; }
+            set
+            {
+                if (value == null)
+                    throw new ArgumentNullException("A parent cannot be null");
+
+                _parent.Questions.Remove(this);
+                _parent = value;
+                _parent.Questions.Add(this);
+            }
         }
 
-        //public partial void answer();
+        public abstract void answer();
 
-        public AnswerBase CreateAnswer()
+        /*public AnswerBase CreateAnswer()
         {
             throw new NotImplementedException();
-        }
+        }*/
 
     }
 }
