@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Universe
+  Version="0"
+  CreationDate="2014-05-23T07:07:44.0149975Z">
+  <Galaxies>
+    <Galaxy
+      Name="Andromède"
+      StarCount="3">
+      <Stars>
+        <Star
+          Name="S1" />
+        <Star
+          Name="S2" />
+        <Star
+          Name="S3" />
+      </Stars>
+    </Galaxy>
+    <Galaxy
+      Name="Cassiopée"
+      StarCount="1">
+      <Stars>
+        <Star
+          Name="s4" />
+      </Stars>
+    </Galaxy>
+  </Galaxies>
+</Universe>
