@@ -10,7 +10,8 @@ namespace Willy
 {
     public abstract class QuestionBase : IQuestionContainer
     {
-        IQuestionFolderContainer _parent;
+        private IQuestionFolderContainer _parent;
+        private string _questionText;
 
         public QuestionBase(IQuestionFolderContainer parent)
         {
@@ -55,12 +56,22 @@ namespace Willy
             }
         }
 
-        public abstract void answer();
+        /// <summary>
+        /// You must create the appropriate answer
+        /// </summary>
+        /// <param name="answerForm"></param>
+        /// <param name="questionForm"></param>
+        /// <returns></returns>
+        internal abstract AnswerBase CreateAnswer(FormAnswer answerForm, QuestionBase questionForm);
 
-        /*public AnswerBase CreateAnswer()
+        /// <summary>
+        /// Returns or sets the question's text
+        /// </summary>
+        public string QuestionText
         {
-            throw new NotImplementedException();
-        }*/
+            get { return _questionText; }
+            set { _questionText = value; }
+        }
 
     }
 }

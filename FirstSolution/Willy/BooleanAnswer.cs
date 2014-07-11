@@ -6,28 +6,28 @@ using System.Threading.Tasks;
 
 namespace Willy
 {
-    public class AnswerBase
+    public class BooleanAnswer : AnswerBase
     {
-        private FormAnswer _formAnswer;
-        private QuestionBase _question;
+        private bool _answer;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="answerForm"></param>
         /// <param name="questionForm"></param>
-        public AnswerBase(FormAnswer answerForm, QuestionBase questionForm)
+        public BooleanAnswer(FormAnswer answerForm, QuestionBase questionForm)
+            : base(answerForm, questionForm)
         {
-            _formAnswer = answerForm;
-            _question = questionForm;
+
         }
 
         /// <summary>
-        /// Internal : Returns the associated question
+        /// Return the answer's result
         /// </summary>
-        internal QuestionBase Question
+        public bool Answer
         {
-            get { return _question; }
+            get { return _answer; }
+            set { _answer = value; }
         }
 
     }

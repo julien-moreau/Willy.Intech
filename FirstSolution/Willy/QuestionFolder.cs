@@ -30,7 +30,16 @@ namespace Willy
             get { return _questions; }
         }
 
-        public override void answer() { }
+        /// <summary>
+        /// Returns null because a QuestionFolder cannnot have any answer
+        /// </summary>
+        /// <param name="answerForm"></param>
+        /// <param name="questionForm"></param>
+        /// <returns></returns>
+        internal override AnswerBase CreateAnswer(FormAnswer answerForm, QuestionBase questionForm)
+        {
+            return null;
+        }
 
     }
 }

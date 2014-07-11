@@ -44,5 +44,33 @@ namespace Intech.Business.Tests
             Assert.That(qf.Index == 1);
         }
 
+        [Test]
+        public void CreateAndEditAnswers()
+        {
+            Willy.Form f = new Willy.Form("sinthu");
+            Assert.That(f.Title == "sinthu");
+
+            IQuestionContainer qb = f.AddQuestion("Willy.BooleanQuestion, Willy");
+            Assert.IsInstanceOfType(typeof(Willy.BooleanQuestion), qb);
+            ((Willy.BooleanQuestion)qb).QuestionText = "Coucou je suis le texte";
+            Assert.That(((Willy.BooleanQuestion)qb).QuestionText == "Coucou je suis le texte");
+
+            Willy.FormAnswer a = f.CreateAnswer("coucou");
+            Assert.That(a.Name == "coucou");
+
+            a.CreateAnswer((Willy.QuestionBase)qb);
+            Willy.AnswerBase AnswerOfQuestion = a.FindAnswer((Willy.QuestionBase)qb);
+            if (AnswerOfQuestion == null)
+            {
+                AnswerOfQuestion = a.CreateAnswer((Willy.QuestionBase)qb);
+            }
+
+            Assert.That(AnswerOfQuestion != null);
+            Assert.IsInstanceOfType(typeof(Willy.BooleanAnswer), AnswerOfQuestion);
+
+            ((Willy.BooleanAnswer)AnswerOfQuestion).Answer = true;
+            Assert.That(((Willy.BooleanAnswer)AnswerOfQuestion).Answer == true);
+        }
+
     }
 }

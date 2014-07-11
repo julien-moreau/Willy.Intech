@@ -40,8 +40,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnswerBase.cs" />
+    <Compile Include="BooleanAnswer.cs" />
     <Compile Include="BooleanQuestion.cs" />
     <Compile Include="Form.cs" />
+    <Compile Include="FormAnswer.cs" />
     <Compile Include="Interfaces\IQuestionContainer.cs" />
     <Compile Include="Interfaces\IQuestionFolderContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

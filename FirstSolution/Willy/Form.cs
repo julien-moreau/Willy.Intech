@@ -11,11 +11,13 @@ namespace Willy
     public class Form : QuestionFolder
     {
         private string _title;
+        private List<FormAnswer> _answerForms;
 
         public Form(string title)
             : base(null)
         {
             _title = title;
+            _answerForms = new List<FormAnswer>();
         }
 
         /// <summary>
@@ -30,6 +32,18 @@ namespace Willy
             base.Questions.Add(thePlugin);
 
             return thePlugin;
+        }
+
+        /// <summary>
+        /// Create a new answer form
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public FormAnswer CreateAnswer(string name)
+        {
+            FormAnswer newFormAnswer = new FormAnswer(name);
+            _answerForms.Add(newFormAnswer);
+            return newFormAnswer;
         }
 
         /// <summary>
