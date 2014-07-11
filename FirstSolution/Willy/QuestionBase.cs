@@ -13,6 +13,10 @@ namespace Willy
         private IQuestionFolderContainer _parent;
         private string _questionText;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="parent"></param>
         public QuestionBase(IQuestionFolderContainer parent)
         {
             _parent = parent;

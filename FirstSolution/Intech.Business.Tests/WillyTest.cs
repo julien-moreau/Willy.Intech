@@ -23,7 +23,6 @@ namespace Intech.Business.Tests
         public void CreateAndEditQuestion()
         {
             Willy.Form f = new Willy.Form("sinthu");
-            Assert.That(f.Title == "sinthu");
 
             IQuestionContainer qb = f.AddQuestion("Willy.BooleanQuestion, Willy");
             IQuestionContainer qb2 = f.AddQuestion("Willy.BooleanQuestion, Willy");
@@ -48,7 +47,6 @@ namespace Intech.Business.Tests
         public void CreateAndEditAnswers()
         {
             Willy.Form f = new Willy.Form("sinthu");
-            Assert.That(f.Title == "sinthu");
 
             IQuestionContainer qb = f.AddQuestion("Willy.BooleanQuestion, Willy");
             Assert.IsInstanceOfType(typeof(Willy.BooleanQuestion), qb);
@@ -70,6 +68,24 @@ namespace Intech.Business.Tests
 
             ((Willy.BooleanAnswer)AnswerOfQuestion).Answer = true;
             Assert.That(((Willy.BooleanAnswer)AnswerOfQuestion).Answer == true);
+
+            Assert.That(a.RemoveAnswer(qb) == true);
+            Assert.That(a.RemoveAnswer(qb) == false);
+        }
+
+        [Test]
+        public void TestRemoveQuestion()
+        {
+            Willy.Form f = new Willy.Form("sinthu");
+            IQuestionContainer qb = f.AddQuestion("Willy.BooleanQuestion, Willy");
+
+            Willy.FormAnswer a = f.CreateAnswer("coucou");
+            a.CreateAnswer((Willy.QuestionBase)qb);
+            Willy.AnswerBase AnswerOfQuestion = a.CreateAnswer((Willy.QuestionBase)qb);
+
+            Assert.That(f.RemoveQuestion(qb) == true);
+            Assert.That(f.Questions.Count == 0);
+            Assert.That(f.RemoveQuestion(qb) == false);
         }
 
     }

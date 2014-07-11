@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace Willy
 {
+    using Interfaces;
+
     public class FormAnswer
     {
         private string _name;
@@ -27,7 +29,7 @@ namespace Willy
         /// </summary>
         /// <param name="question"></param>
         /// <returns></returns>
-        public AnswerBase FindAnswer(QuestionBase question)
+        public AnswerBase FindAnswer(IQuestionContainer question)
         {
             foreach (var a in _answers)
             {
@@ -49,10 +51,31 @@ namespace Willy
             return a;
         }
 
+        /// <summary>
+        /// Return or set the name of the answer form
+        /// </summary>
         public string Name
         {
             get { return _name; }
             set { _name = value; }
+        }
+
+        /// <summary>
+        /// Remove the answer related to the given question
+        /// </summary>
+        /// <param name="question"></param>
+        /// <returns></returns>
+        public bool RemoveAnswer(IQuestionContainer question)
+        {
+            foreach (var a in _answers)
+            {
+                if (a.Question == question)
+                {
+                    bool test = _answers.Remove(a);
+                    return true;
+                }
+            }
+            return false;
         }
 
     }

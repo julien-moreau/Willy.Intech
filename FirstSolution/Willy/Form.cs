@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Willy.Interfaces;
-
 namespace Willy
 {
+    using Interfaces;
+
     public class Form : QuestionFolder
     {
         private string _title;
@@ -53,6 +53,30 @@ namespace Willy
         {
             get { return _title; }
             set { _title = value; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="question"></param>
+        /// <returns></returns>
+        public bool RemoveQuestion(IQuestionContainer question)
+        {
+            foreach (var a in _answerForms)
+            {
+                AnswerBase answer = a.FindAnswer(question);
+                if (answer != null)
+                {
+                    a.RemoveAnswer(question);
+                    break;
+                }
+            }
+
+            bool test = base.Questions.Remove(question);
+            if (test)
+                question = null;
+
+            return test;
         }
 
     }
