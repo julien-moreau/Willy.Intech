@@ -25,11 +25,19 @@ namespace Willy
         /// </summary>
         /// <param name="pluginTypeName"></param>
         /// <returns></returns>
-        public IQuestionContainer AddQuestion(string pluginTypeName)
+        public IQuestionContainer AddQuestion(string pluginTypeName, IQuestionFolderContainer folder = null)
         {
             Type pluginType = Type.GetType(pluginTypeName);
-            IQuestionContainer thePlugin = (IQuestionContainer)Activator.CreateInstance(pluginType, this);
-            base.Questions.Add(thePlugin);
+            IQuestionContainer thePlugin = (IQuestionContainer)Activator.CreateInstance(pluginType, folder == null ? this : folder);
+
+            if (folder == null)
+            {
+                base.Questions.Add(thePlugin);
+            }
+            else
+            {
+                folder.Questions.Add(thePlugin);
+            }
 
             return thePlugin;
         }
@@ -60,7 +68,43 @@ namespace Willy
         /// </summary>
         /// <param name="question"></param>
         /// <returns></returns>
-        public bool RemoveQuestion(IQuestionContainer question)
+        public bool RemoveQuestion(IQuestionContainer question, IQuestionFolderContainer root = null)
+        {
+            if (root == null)
+                root = question.Parent;
+
+            foreach (IQuestionContainer q in root.Questions)
+            {
+                IQuestionFolderContainer folder = q as IQuestionFolderContainer;
+                if (folder != null)
+                {
+                    if (folder == question)
+                    {
+                        IEnumerator<IQuestionContainer> e = folder.Questions.GetEnumerator();
+                        while (e.MoveNext())
+                        {
+                            e.Current.Parent = root;
+                            e.Reset();
+                            e.MoveNext();
+                        }
+                        return root.Questions.Remove(folder);
+                    }
+                    return this.RemoveQuestion(question, folder);
+                }
+                else
+                {
+                    if (q == question)
+                    {
+                        RemoveAnswer(question);
+                        return root.Questions.Remove(question);
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        private bool RemoveAnswer(IQuestionContainer question)
         {
             foreach (var a in _answerForms)
             {
@@ -68,15 +112,11 @@ namespace Willy
                 if (answer != null)
                 {
                     a.RemoveAnswer(question);
-                    break;
+                    return true;
                 }
             }
 
-            bool test = base.Questions.Remove(question);
-            if (test)
-                question = null;
-
-            return test;
+            return false;
         }
 
     }

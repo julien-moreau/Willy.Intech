@@ -85,7 +85,35 @@ namespace Intech.Business.Tests
 
             Assert.That(f.RemoveQuestion(qb) == true);
             Assert.That(f.Questions.Count == 0);
+
             Assert.That(f.RemoveQuestion(qb) == false);
+        }
+
+        [Test]
+        public void TestWithQuestionFolder()
+        {
+            Willy.Form f = new Willy.Form("sinthu");
+            IQuestionContainer qb = f.AddQuestion("Willy.BooleanQuestion, Willy");
+            IQuestionContainer qf = f.AddQuestion("Willy.QuestionFolder, Willy");
+            if (typeof(Willy.QuestionFolder) == qf)
+            {
+                Assert.Fail("it is not a folder. Final Point.");
+            }
+
+            IQuestionFolderContainer folder = (IQuestionFolderContainer)qf;
+
+            Assert.That(qb.Index == 0);
+            Assert.That(folder.Index == 1);
+
+            IQuestionContainer qif = f.AddQuestion("Willy.BooleanQuestion, Willy", folder);
+            Assert.That(qif.Index == 0);
+
+            Assert.That(f.RemoveQuestion(qif, f) == true);
+            qif = f.AddQuestion("Willy.BooleanQuestion, Willy", folder);
+            IQuestionContainer qif2 = f.AddQuestion("Willy.BooleanQuestion, Willy", folder);
+
+            Assert.That(f.RemoveQuestion(folder));
+            Assert.That(qif.Index == 1);
         }
 
     }

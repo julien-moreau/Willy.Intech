@@ -71,7 +71,7 @@ namespace Willy
             {
                 if (a.Question == question)
                 {
-                    bool test = _answers.Remove(a);
+                    _answers.Remove(a);
                     return true;
                 }
             }
