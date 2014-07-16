@@ -80,13 +80,24 @@ namespace Willy
                 {
                     if (folder == question)
                     {
+                        /// Create a temp list
+                        List<IQuestionContainer> temp = new List<IQuestionContainer>();
+                        /// Fill the temp list (IEnumarator)
                         IEnumerator<IQuestionContainer> e = folder.Questions.GetEnumerator();
                         while (e.MoveNext())
                         {
-                            e.Current.Parent = root;
-                            e.Reset();
-                            e.MoveNext();
+                            temp.Add(e.Current);
                         }
+                        /// Modifie parent of all children of folder
+                        foreach (var tempElement in temp)
+                        {
+                            tempElement.Parent = root;
+                        }
+                        /// Clear the folder's questions
+                        folder.Questions.Clear();
+                        /// Delete the temp list
+                        temp = null;
+
                         return root.Questions.Remove(folder);
                     }
                     return this.RemoveQuestion(question, folder);
@@ -104,6 +115,11 @@ namespace Willy
             return false;
         }
 
+        /// <summary>
+        /// Returns true if the answer where removed or not
+        /// </summary>
+        /// <param name="question"></param>
+        /// <returns></returns>
         private bool RemoveAnswer(IQuestionContainer question)
         {
             foreach (var a in _answerForms)

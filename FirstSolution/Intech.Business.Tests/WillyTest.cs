@@ -112,7 +112,7 @@ namespace Intech.Business.Tests
             qif = f.AddQuestion("Willy.BooleanQuestion, Willy", folder);
             IQuestionContainer qif2 = f.AddQuestion("Willy.BooleanQuestion, Willy", folder);
 
-            Assert.That(f.RemoveQuestion(folder));
+            Assert.That(f.RemoveQuestion(folder) == true);
             Assert.That(qif.Index == 1);
         }
 
