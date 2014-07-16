@@ -8,11 +8,17 @@ namespace Willy
 {
     using Interfaces;
 
+    [Serializable]
     public class Form : QuestionFolder
     {
         private string _title;
         private List<FormAnswer> _answerForms;
 
+        /// <summary>
+        /// ctor
+        /// To completely use the Factory Pattern, just set the Form constructor to "internal"
+        /// </summary>
+        /// <param name="title"></param>
         public Form(string title)
             : base(null)
         {
@@ -68,7 +74,7 @@ namespace Willy
         /// </summary>
         /// <param name="question"></param>
         /// <returns></returns>
-        public bool RemoveQuestion(IQuestionContainer question, IQuestionFolderContainer root = null)
+        public bool RemoveQuestion(IQuestionContainer question, bool removeQuestions = false, IQuestionFolderContainer root = null)
         {
             if (root == null)
                 root = question.Parent;
@@ -88,10 +94,13 @@ namespace Willy
                         {
                             temp.Add(e.Current);
                         }
-                        /// Modifie parent of all children of folder
-                        foreach (var tempElement in temp)
+                        /// Modify parent of all children of folder
+                        if (!removeQuestions)
                         {
-                            tempElement.Parent = root;
+                            foreach (var tempElement in temp)
+                            {
+                                tempElement.Parent = root;
+                            }
                         }
                         /// Clear the folder's questions
                         folder.Questions.Clear();
@@ -100,7 +109,7 @@ namespace Willy
 
                         return root.Questions.Remove(folder);
                     }
-                    return this.RemoveQuestion(question, folder);
+                    return this.RemoveQuestion(question, removeQuestions, folder);
                 }
                 else
                 {

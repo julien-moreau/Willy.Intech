@@ -8,6 +8,7 @@ using Willy.Interfaces;
 
 namespace Willy
 {
+    [Serializable]
     public class QuestionFolder : QuestionBase, IQuestionFolderContainer
     {
         private List<IQuestionContainer> _questions;

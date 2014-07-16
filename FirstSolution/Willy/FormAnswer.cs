@@ -8,13 +8,15 @@ namespace Willy
 {
     using Interfaces;
 
+    [Serializable]
     public class FormAnswer
     {
         private string _name;
         private List<AnswerBase> _answers;
 
         /// <summary>
-        /// Constructor
+        /// ctor
+        /// To completely use the Factory Pattern, just set the FormAnswer constructor to "internal"
         /// </summary>
         /// <param name="name"></param>
         public FormAnswer(string name)

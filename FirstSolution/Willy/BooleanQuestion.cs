@@ -8,6 +8,7 @@ using Willy.Interfaces;
 
 namespace Willy
 {
+    [Serializable]
     public class BooleanQuestion : QuestionBase
     {
         /// <summary>
