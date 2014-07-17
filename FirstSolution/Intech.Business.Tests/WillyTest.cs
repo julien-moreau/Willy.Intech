@@ -213,6 +213,8 @@ namespace Intech.Business.Tests
         [Test]
         public void FactoryTest()
         {
+            ///For the real Factory pattern, please read the Form constructor. PLEASE.
+
             Willy.Factory factory = Willy.Factory.GetFactory();
             Assert.That(factory != null && factory is Willy.FormFactory);
 
