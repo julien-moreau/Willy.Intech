@@ -10,6 +10,9 @@ namespace Willy
 
     public class FormFactory : Factory
     {
+        /// <summary>
+        /// ctor
+        /// </summary>
         public FormFactory() { }
 
         public override Form CreateQuestionForm(string title)
@@ -27,7 +30,11 @@ namespace Willy
     {
         public static Factory GetFactory()
         {
-            return new FormFactory();
+            if (_factory == null)
+            {
+                _factory = new FormFactory();
+            }
+            return _factory;
         }
 
         /// <summary>
@@ -43,5 +50,7 @@ namespace Willy
         /// <param name="name"></param>
         /// <returns></returns>
         public abstract FormAnswer CreateAnswerForm(string name);
+
+        private static FormFactory _factory;
     }
 }
